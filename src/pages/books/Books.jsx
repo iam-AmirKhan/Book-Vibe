@@ -1,19 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
+import Book from "../book/Book";
 
-const Books = () => {
+const Books = ({data}) => {
   const [allBooks, setAllBooks] = useState([]);
 
-  useEffect(() => {
-    fetch("booksData.json")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setAllBooks(data);
-      });
-  }, []);
+  //   useEffect(() => {
+  //     fetch("booksData.json")
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //         setAllBooks(data);
+  //       });
+  //   }, []);
+
+//   const bookPromise = fetch("/booksData.json").then((res) => res.json());
+
   return (
     <div>
-
+      <h1 className="text-3xl font-bold text-center p-6">Books</h1>
+      <Suspense fallback={<span>loading.....</span>}>
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+           { 
+        data.map((singleBook) =><Book key={singleBook.bookId} singleBook={singleBook}></Book>)
+       }
+</div>
+      </Suspense>
     </div>
   );
 };
