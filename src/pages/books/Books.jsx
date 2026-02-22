@@ -1,8 +1,11 @@
 import React, { Suspense, useEffect, useState } from "react";
 import Book from "../book/Book";
+import { useLoaderData } from "react-router";
 
-const Books = ({data}) => {
-  const [allBooks, setAllBooks] = useState([]);
+const Books = () => {
+  const data = useLoaderData();
+
+  // const [allBooks, setAllBooks] = useState([]);
 
   //   useEffect(() => {
   //     fetch("booksData.json")
@@ -13,17 +16,17 @@ const Books = ({data}) => {
   //       });
   //   }, []);
 
-//   const bookPromise = fetch("/booksData.json").then((res) => res.json());
+  //   const bookPromise = fetch("/booksData.json").then((res) => res.json());
 
   return (
     <div>
       <h1 className="text-3xl font-bold text-center p-6">Books</h1>
       <Suspense fallback={<span>loading.....</span>}>
-<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-           { 
-        data.map((singleBook) =><Book key={singleBook.bookId} singleBook={singleBook}></Book>)
-       }
-</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {data.map((singleBook) => (
+            <Book key={singleBook.bookId} singleBook={singleBook}></Book>
+          ))}
+        </div>
       </Suspense>
     </div>
   );
